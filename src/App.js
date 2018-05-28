@@ -3,20 +3,31 @@ import {
   MuiThemeProvider,
   createMuiTheme,
   withStyles,
-  CssBaseline
+  CssBaseline,
+  Grid,
+  colors
 } from '@material-ui/core';
+import Card from './components/Card';
+import Decoration from './components/Decoration';
+import LoginForm from './components/LoginForm';
 
 const theme = createMuiTheme({
-  palette: {}
+  palette: {
+    primary: {
+      light: colors.lightBlue[100],
+      main: colors.lightBlue[200],
+      dark: colors.lightBlue[300],
+      contrastText: '#fff'
+    }
+  }
 });
 
 const styles = {
   app: {
-    background: 'radial-gradient(#add1e2 30%, #74c3df)',
-    minHeight: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
+    background: `radial-gradient(${colors.lightBlue[50]}, ${
+      colors.lightBlue[300]
+    })`,
+    minHeight: '100vh'
   }
 };
 
@@ -26,7 +37,17 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <div className={classes.app}>test</div>
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          className={classes.app}
+        >
+          <Card>
+            <Decoration />
+            <LoginForm />
+          </Card>
+        </Grid>
       </MuiThemeProvider>
     );
   }
