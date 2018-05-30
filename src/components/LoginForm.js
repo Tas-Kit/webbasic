@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles, Grid, Button, TextField } from '@material-ui/core';
 import Form from './Form';
+import { loginForm } from '../config/forms';
 
 const styles = {
   formContainer: {
@@ -13,20 +14,7 @@ const styles = {
   }
 };
 
-const fields = [
-  {
-    name: 'username',
-    label: 'Username',
-    type: 'text',
-    required: true
-  },
-  {
-    name: 'password',
-    label: 'Password',
-    type: 'password',
-    required: true
-  }
-];
+const fields = loginForm.fields;
 
 const LoginForm = props => {
   const { classes } = props;
