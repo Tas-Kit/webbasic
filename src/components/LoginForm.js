@@ -1,5 +1,7 @@
 import React from 'react';
 import { withStyles, Grid, Button, TextField } from '@material-ui/core';
+import Form from './Form';
+
 const styles = {
   formContainer: {
     padding: '2em'
@@ -10,6 +12,22 @@ const styles = {
     margin: '1em 0'
   }
 };
+
+const fields = [
+  {
+    name: 'username',
+    label: 'Username',
+    type: 'text',
+    required: true
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    required: true
+  }
+];
+
 const LoginForm = props => {
   const { classes } = props;
   return (
@@ -21,27 +39,7 @@ const LoginForm = props => {
       className={classes.formContainer}
     >
       <Grid item xs>
-        <TextField
-          id="username"
-          label="Username"
-          className={classes.textField}
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          margin="normal"
-        />
-        <TextField
-          id="password"
-          label="Password"
-          className={classes.textField}
-          type="password"
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          margin="normal"
-        />
+        <Form fields={fields} />
       </Grid>
       <Grid item>
         <Button
