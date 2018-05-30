@@ -1,8 +1,16 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
+import { withStyles, Button, TextField } from '@material-ui/core';
+
+const styles = {
+  textField: {},
+  mainButton: {
+    borderRadius: 15,
+    margin: '1em 0'
+  }
+};
 
 const Form = props => {
-  const { fields } = props;
+  const { fields, handleSubmit, action, classes } = props;
   return (
     <form>
       {!fields ? (
@@ -11,6 +19,7 @@ const Form = props => {
         fields.map(field => (
           <TextField
             id={field.name}
+            key={field.name}
             label={field.label}
             type={field.type}
             required={field.required}
@@ -22,8 +31,18 @@ const Form = props => {
           />
         ))
       )}
+      <Button
+        fullWidth
+        color="primary"
+        variant={'raised'}
+        id={action.name}
+        onClick={handleSubmit}
+        className={classes.mainButton}
+      >
+        {action.label}
+      </Button>
     </form>
   );
 };
 
-export default Form;
+export default withStyles(styles)(Form);

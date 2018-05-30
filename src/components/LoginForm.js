@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, Grid, Button, TextField } from '@material-ui/core';
+import { withStyles, Grid, Button } from '@material-ui/core';
 import Form from './Form';
 import { loginForm } from '../config/forms';
 
@@ -14,10 +14,11 @@ const styles = {
   }
 };
 
-const fields = loginForm.fields;
+const { fields, action } = loginForm;
 
 const LoginForm = props => {
   const { classes } = props;
+  const handleSubmit = () => {};
   return (
     <Grid
       container
@@ -27,18 +28,9 @@ const LoginForm = props => {
       className={classes.formContainer}
     >
       <Grid item xs>
-        <Form fields={fields} />
+        <Form fields={fields} action={action} handleSubmit={handleSubmit} />
       </Grid>
       <Grid item>
-        <Button
-          fullWidth
-          color="primary"
-          variant={'raised'}
-          id="login"
-          className={classes.mainButton}
-        >
-          Login
-        </Button>
         <Grid container>
           <Grid item xs>
             <Button color="primary" variant={'flat'} id="forgot-password">

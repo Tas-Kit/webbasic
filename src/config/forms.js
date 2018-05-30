@@ -12,7 +12,12 @@ export const loginForm = {
       type: 'password',
       required: true
     }
-  ]
+  ],
+  action: {
+    name: 'login',
+    label: 'Login',
+    url: '#'
+  }
 };
 
 export default {
