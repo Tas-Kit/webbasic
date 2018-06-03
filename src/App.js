@@ -9,7 +9,8 @@ import {
 } from '@material-ui/core';
 import Card from './components/Card';
 import Decoration from './components/Decoration';
-import LoginForm from './components/LoginForm';
+import FormContainer from './components/FormContainer';
+import { loginForm } from './config/forms';
 
 const theme = createMuiTheme({
   palette: {
@@ -45,7 +46,7 @@ class App extends Component {
         >
           <Card>
             <Decoration />
-            <LoginForm />
+            <FormContainer form={loginForm} />
           </Card>
         </Grid>
       </MuiThemeProvider>

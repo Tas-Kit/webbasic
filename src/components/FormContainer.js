@@ -1,7 +1,6 @@
 import React from 'react';
 import { withStyles, Grid } from '@material-ui/core';
 import Form from './Form';
-import { loginForm } from '../config/forms';
 import SecondaryActionButtons from './SecondaryActionButtons';
 
 const styles = {
@@ -10,10 +9,9 @@ const styles = {
   }
 };
 
-const { fields, action, secondaryActions } = loginForm;
-
 const LoginForm = props => {
-  const { classes } = props;
+  const { classes, form } = props;
+  const { fields, action, secondaryActions } = form;
   const handleSubmit = () => {};
   return (
     <Grid
