@@ -25,7 +25,9 @@ const LoginForm = props => {
         <Form fields={fields} action={action} handleSubmit={handleSubmit} />
       </Grid>
       <Grid item>
-        <SecondaryActionButtons secondaryActions={secondaryActions} />
+        {secondaryActions && (
+          <SecondaryActionButtons secondaryActions={secondaryActions} />
+        )}
       </Grid>
     </Grid>
   );
