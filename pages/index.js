@@ -1,4 +1,4 @@
-import App from '../src/App';
 import { loginForm } from '../config/forms';
+import AccountCard from '../src/components/AccountCard';
 
-export default () => <App form={loginForm} />;
+export default () => <AccountCard form={loginForm} />;
