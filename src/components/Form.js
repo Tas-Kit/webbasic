@@ -23,6 +23,7 @@ const Form = props => {
             label={field.label}
             type={field.type}
             required={field.required}
+            helperText={field.helperText}
             fullWidth
             InputLabelProps={{
               shrink: true
