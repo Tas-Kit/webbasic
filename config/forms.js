@@ -20,10 +20,12 @@ export const loginForm = {
   },
   secondaryActions: [
     {
-      name: 'forgot password'
+      name: 'forgot password',
+      url: '/reset_password'
     },
     {
-      name: 'sign up'
+      name: 'sign up',
+      url: '/signup'
     }
   ]
 };
@@ -59,6 +61,21 @@ export const signupForm = {
   action: {
     name: 'signup',
     label: 'Sign up',
+    url: '#'
+  }
+};
+
+export const resetPasswordForm = {
+  fields: [
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'email'
+    }
+  ],
+  action: {
+    name: 'reset_password',
+    label: 'Reset Password',
     url: '#'
   }
 };

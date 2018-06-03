@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
+import Link from 'next/link';
 
 const SecondaryActionButtons = props => {
   const { secondaryActions } = props;
@@ -8,9 +9,11 @@ const SecondaryActionButtons = props => {
     <Grid container justify={'space-between'}>
       {secondaryActions.map(action => (
         <Grid key={action.name}>
-          <Button variant="flat" color="primary" onClick={action.handleClick}>
-            {action.name}
-          </Button>
+          <Link href={action.url}>
+            <Button variant="flat" color="primary">
+              {action.name}
+            </Button>
+          </Link>
         </Grid>
       ))}
     </Grid>
