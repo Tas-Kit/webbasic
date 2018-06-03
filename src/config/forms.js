@@ -17,7 +17,15 @@ export const loginForm = {
     name: 'login',
     label: 'Login',
     url: '#'
-  }
+  },
+  secondaryActions: [
+    {
+      name: 'forgot password'
+    },
+    {
+      name: 'sign up'
+    }
+  ]
 };
 
 export default {
