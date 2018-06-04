@@ -1,7 +1,3 @@
-const dev = process.env.NODE_ENV !== 'production';
-
-const baseUrl = dev ? '' : '/web/basic';
-
 export const loginForm = {
   fields: [
     {
