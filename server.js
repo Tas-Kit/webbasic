@@ -10,11 +10,15 @@ app.prepare().then(() => {
 
   server.set('port', process.env.PORT || 3000);
 
-  server.get('*', (req, res) => {
+  server.use((req, res, next) => {
     const test = /\?[^]*\//.test(req.url);
     if (req.url.substr(-1) === '/' && req.url.length > 1 && !test)
-      res.redirect(301, req.url.slice(0, -1));
-    else return handle(req, res);
+      req.url = req.url.slice(0, -1);
+    next();
+  });
+
+  server.get('*', (req, res) => {
+    return handle(req, res);
   });
 
   server.listen(server.get('port'), err => {
