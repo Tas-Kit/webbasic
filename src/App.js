@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Grid } from '@material-ui/core';
 import Card from './components/Card';
 import Decoration from './components/Decoration';
 import FormContainer from './components/FormContainer';
