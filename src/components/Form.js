@@ -10,7 +10,14 @@ const styles = {
 };
 
 const Form = props => {
-  const { fields, handleSubmit, action, classes } = props;
+  const {
+    fields,
+    handleSubmit,
+    handleValueChange,
+    action,
+    values,
+    classes
+  } = props;
   return (
     <form>
       {!fields ? (
@@ -25,6 +32,8 @@ const Form = props => {
             required={field.required}
             helperText={field.helperText}
             fullWidth
+            onChange={handleValueChange(field.name)}
+            values={values[field.name]}
             InputLabelProps={{
               shrink: true
             }}
