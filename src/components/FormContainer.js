@@ -1,7 +1,8 @@
 import React from 'react';
 import { withStyles, Grid } from '@material-ui/core';
-import Form from './Form';
 import SecondaryActionButtons from './SecondaryActionButtons';
+import Form from './Form';
+import { post } from '../api';
 
 const styles = {
   formContainer: {
@@ -17,6 +18,12 @@ class FormContainer extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    this.setState({
+      values: {}
+    });
+  }
+
   handleValueChange = key => e => {
     this.setState({
       values: {
@@ -25,11 +32,14 @@ class FormContainer extends React.Component {
       }
     });
   };
+  handleSubmit = url => {
+    post(url, this.state.values);
+  };
 
   render() {
     const { classes, form } = this.props;
     const { fields, action, secondaryActions } = form;
-    const handleSubmit = () => {};
+
     return (
       <Grid
         container
@@ -44,7 +54,7 @@ class FormContainer extends React.Component {
             action={action}
             values={this.state.values}
             handleValueChange={this.handleValueChange}
-            handleSubmit={handleSubmit}
+            handleSubmit={this.handleSubmit(action.url)}
           />
         </Grid>
         <Grid item>

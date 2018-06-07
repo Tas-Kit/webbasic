@@ -16,7 +16,7 @@ export const loginForm = {
   action: {
     name: 'login',
     label: 'Login',
-    url: '#'
+    url: '/login'
   },
   secondaryActions: [
     {
@@ -51,7 +51,7 @@ export const signupForm = {
   action: {
     name: 'signup',
     label: 'Sign up',
-    url: '#'
+    url: '/signup'
   }
 };
 
