@@ -6,7 +6,7 @@ const styles = {
 };
 
 const Form = props => {
-  const { fields, handleValueChange, values } = props;
+  const { fields, handleValueChange, values, isLoading } = props;
   return (
     <form>
       {!fields ? (
@@ -20,6 +20,7 @@ const Form = props => {
             type={field.type}
             required={field.required}
             helperText={field.helperText}
+            disabled={isLoading}
             fullWidth
             onChange={handleValueChange(field.name)}
             values={values[field.name]}

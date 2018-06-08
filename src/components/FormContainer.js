@@ -22,7 +22,8 @@ class FormContainer extends React.Component {
     super(props);
     this.state = {
       values: {},
-      errorMessage: ''
+      errorMessage: '',
+      isLoading: false
     };
   }
 
@@ -40,12 +41,29 @@ class FormContainer extends React.Component {
     if (this.hasError()) {
       console.log('error');
     } else {
-      post(url, this.state.values).catch(err =>
-        this.setState({
-          ...this.state,
-          errorMessage: err['non_field_errors']
+      this.setState({
+        ...this.state,
+        isLoading: true
+      });
+      post(url, this.state.values)
+        .then(result => {
+          this.setState({
+            ...this.state,
+            errorMessage: ''
+          });
         })
-      );
+        .catch(err =>
+          this.setState({
+            ...this.state,
+            errorMessage: err['non_field_errors']
+          })
+        )
+        .finally(() =>
+          this.setState({
+            ...this.state,
+            isLoading: false
+          })
+        );
     }
   };
 
@@ -77,6 +95,7 @@ class FormContainer extends React.Component {
             fields={fields}
             values={this.state.values}
             handleValueChange={this.handleValueChange}
+            isLoading={this.state.isLoading}
           />
           <p className={classes.errorMessage}>{this.state.errorMessage}</p>
           <Button
@@ -86,6 +105,7 @@ class FormContainer extends React.Component {
             id={action.name}
             onClick={this.handleSubmit(action.url)}
             className={classes.mainButton}
+            disabled={this.state.isLoading}
           >
             {action.label}
           </Button>
