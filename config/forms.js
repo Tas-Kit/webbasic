@@ -16,16 +16,16 @@ export const loginForm = {
   action: {
     name: 'login',
     label: 'Login',
-    url: '/login'
+    url: '/login/'
   },
   secondaryActions: [
     {
       name: 'forgot password',
-      url: '/reset_password'
+      url: '/reset_password/'
     },
     {
       name: 'sign up',
-      url: '/signup'
+      url: '/signup/'
     }
   ]
 };
@@ -51,7 +51,7 @@ export const signupForm = {
   action: {
     name: 'signup',
     label: 'Sign up',
-    url: '/signup'
+    url: '/signup/'
   }
 };
 

@@ -1,16 +1,18 @@
 let baseUrl;
 
 if (process.env.NODE_ENV === 'development') {
-  baseUrl = '#';
+  baseUrl =
+    'http://userservice-sandbox.taskit.13.56.178.175.xip.io/api/v1/userservice';
 } else {
-  baseUrl = '#';
+  baseUrl =
+    'http://userservice-sandbox.taskit.13.56.178.175.xip.io/api/v1/userservice';
   if (typeof window !== 'undefined') {
     const { location } = window;
     baseUrl = `${location.protocol}//${location.host}/api/v1`; // (or whatever)
   }
 }
 
-const defaultOnError = () => {
+const defaultOnError = res => {
   throw new Error();
 };
 
@@ -28,8 +30,10 @@ const transformResponse = res => {
     case 401:
       handleTimeOut();
       break;
+    case 400:
+      return res.json().then(errors => Promise.reject(errors));
     default:
-      defaultOnError();
+      defaultOnError(res);
   }
   return null;
 };
@@ -38,7 +42,6 @@ export const post = async (url, payload) => {
   // use async so thrwoed errors in transformResponse can be caught
   const json = await fetch(`${baseUrl}${url}`, {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    credentials: 'include',
     method: 'POST',
     body: JSON.stringify(payload)
   }).then(res => transformResponse(res));
@@ -46,11 +49,11 @@ export const post = async (url, payload) => {
 };
 
 export const postLogin = payload => {
-  return post('/login', payload);
+  return post('/login/', payload);
 };
 
 export const postSignup = payload => {
-  return post('/signup', payload);
+  return post('/signup/', payload);
 };
 
 export default {

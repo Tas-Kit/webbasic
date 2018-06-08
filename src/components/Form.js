@@ -2,22 +2,11 @@ import React from 'react';
 import { withStyles, Button, TextField } from '@material-ui/core';
 
 const styles = {
-  textField: {},
-  mainButton: {
-    borderRadius: 15,
-    margin: '1em 0'
-  }
+  textField: {}
 };
 
 const Form = props => {
-  const {
-    fields,
-    handleSubmit,
-    handleValueChange,
-    action,
-    values,
-    classes
-  } = props;
+  const { fields, handleValueChange, values } = props;
   return (
     <form>
       {!fields ? (
@@ -41,16 +30,6 @@ const Form = props => {
           />
         ))
       )}
-      <Button
-        fullWidth
-        color="primary"
-        variant={'raised'}
-        id={action.name}
-        onClick={handleSubmit}
-        className={classes.mainButton}
-      >
-        {action.label}
-      </Button>
     </form>
   );
 };

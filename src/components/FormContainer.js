@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, Grid } from '@material-ui/core';
+import { withStyles, Grid, Button, colors } from '@material-ui/core';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import Form from './Form';
 import { post } from '../api';
@@ -7,6 +7,13 @@ import { post } from '../api';
 const styles = {
   formContainer: {
     padding: '2em'
+  },
+  mainButton: {
+    borderRadius: 15,
+    margin: '1em 0'
+  },
+  errorMessage: {
+    color: colors.red[500]
   }
 };
 
@@ -14,27 +21,44 @@ class FormContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: {}
+      values: {},
+      errorMessage: ''
     };
-  }
-
-  componentDidUpdate() {
-    this.setState({
-      values: {}
-    });
   }
 
   handleValueChange = key => e => {
     this.setState({
+      ...this.state,
       values: {
         ...this.state.values,
         [key]: e.target.value
       }
     });
   };
-  handleSubmit = url => {
-    post(url, this.state.values);
+
+  handleSubmit = url => () => {
+    if (this.hasError()) {
+      console.log('error');
+    } else {
+      post(url, this.state.values).catch(err =>
+        this.setState({
+          ...this.state,
+          errorMessage: err['non_field_errors']
+        })
+      );
+    }
   };
+
+  hasError() {
+    const values = this.state.values;
+    return this.props.form.fields.some(field => {
+      const name = field.name;
+      if (field.required && !values[name]) {
+        return true;
+      }
+      return false;
+    });
+  }
 
   render() {
     const { classes, form } = this.props;
@@ -51,11 +75,20 @@ class FormContainer extends React.Component {
         <Grid item xs>
           <Form
             fields={fields}
-            action={action}
             values={this.state.values}
             handleValueChange={this.handleValueChange}
-            handleSubmit={this.handleSubmit(action.url)}
           />
+          <p className={classes.errorMessage}>{this.state.errorMessage}</p>
+          <Button
+            fullWidth
+            color="primary"
+            variant={'raised'}
+            id={action.name}
+            onClick={this.handleSubmit(action.url)}
+            className={classes.mainButton}
+          >
+            {action.label}
+          </Button>
         </Grid>
         <Grid item>
           {secondaryActions && (
