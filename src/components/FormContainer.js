@@ -47,10 +47,7 @@ class FormContainer extends React.Component {
       });
       post(url, this.state.values)
         .then(result => {
-          this.setState({
-            ...this.state,
-            errorMessage: ''
-          });
+          window.location.replace(this.props.form.action.redirectUrl);
         })
         .catch(err =>
           this.setState({

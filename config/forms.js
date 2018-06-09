@@ -16,7 +16,8 @@ export const loginForm = {
   action: {
     name: 'login',
     label: 'Login',
-    url: '/login/'
+    url: '/login/',
+    redirectUrl: '/main/'
   },
   secondaryActions: [
     {
@@ -51,7 +52,8 @@ export const signupForm = {
   action: {
     name: 'signup',
     label: 'Sign up',
-    url: '/signup/'
+    url: '/signup/',
+    redirectUrl: '/main/'
   }
 };
 
