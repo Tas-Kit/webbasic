@@ -36,7 +36,11 @@ export const loginForm = {
       name: 'sign up',
       url: '/signup/'
     }
-  ]
+  ],
+  rules: {
+    username: 'required',
+    password: 'required'
+  }
 };
 
 export const signupForm = {
@@ -46,6 +50,11 @@ export const signupForm = {
     label: 'Sign up',
     url: '/signup/',
     redirectUrl: '/main/'
+  },
+  rules: {
+    username: 'required',
+    password: 'required|min:8',
+    email: 'required|email'
   }
 };
 

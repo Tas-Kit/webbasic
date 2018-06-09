@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles, Grid, Button, colors } from '@material-ui/core';
+import Validator from 'validatorjs';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import Form from './Form';
 import { post } from '../api';
@@ -29,13 +30,28 @@ class FormContainer extends React.Component {
   }
 
   handleValueChange = key => e => {
-    this.setState({
-      ...this.state,
-      values: {
-        ...this.state.values,
-        [key]: e.target.value
-      }
-    });
+    const { rules } = this.props.form;
+    const newValues = {
+      ...this.state.values,
+      [key]: e.target.value
+    };
+    const validation = new Validator(newValues, rules);
+    console.log(validation);
+    if (validation.passes()) {
+      this.setState({
+        ...this.state,
+        values: newValues,
+        isError: false,
+        errors: {}
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        values: newValues,
+        isError: true,
+        errors: validation.errors.all()
+      });
+    }
   };
 
   handleSubmit = url => () => {
@@ -96,7 +112,7 @@ class FormContainer extends React.Component {
             id={action.name}
             onClick={this.handleSubmit(action.url)}
             className={classes.mainButton}
-            disabled={this.state.isLoading}
+            disabled={this.state.isLoading || this.state.isError}
           >
             {action.label}
           </Button>
