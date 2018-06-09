@@ -22,8 +22,9 @@ class FormContainer extends React.Component {
     super(props);
     this.state = {
       values: {},
-      errorMessage: '',
-      isLoading: false
+      isLoading: false,
+      isError: false,
+      errors: {}
     };
   }
 
@@ -38,9 +39,7 @@ class FormContainer extends React.Component {
   };
 
   handleSubmit = url => () => {
-    if (this.hasError()) {
-      console.log('error');
-    } else {
+    if (!this.state.isError) {
       this.setState({
         ...this.state,
         isLoading: true
@@ -52,7 +51,8 @@ class FormContainer extends React.Component {
         .catch(err =>
           this.setState({
             ...this.state,
-            errorMessage: err['non_field_errors']
+            errors: err,
+            isError: true
           })
         )
         .finally(() =>
@@ -63,17 +63,6 @@ class FormContainer extends React.Component {
         );
     }
   };
-
-  hasError() {
-    const values = this.state.values;
-    return this.props.form.fields.some(field => {
-      const name = field.name;
-      if (field.required && !values[name]) {
-        return true;
-      }
-      return false;
-    });
-  }
 
   render() {
     const { classes, form } = this.props;
@@ -92,9 +81,14 @@ class FormContainer extends React.Component {
             fields={fields}
             values={this.state.values}
             handleValueChange={this.handleValueChange}
+            errors={this.state.errors}
             isLoading={this.state.isLoading}
           />
-          <p className={classes.errorMessage}>{this.state.errorMessage}</p>
+          {this.state.errors['non_field_errors'] && (
+            <p className={classes.errorMessage}>
+              {this.state.errors['non_field_errors']}
+            </p>
+          )}
           <Button
             fullWidth
             color="primary"
