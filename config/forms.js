@@ -1,18 +1,26 @@
+const usernameField = {
+  name: 'username',
+  label: 'Username',
+  type: 'text',
+  required: true
+};
+
+const passwordField = {
+  name: 'password',
+  label: 'Password',
+  type: 'password',
+  required: true
+};
+
+const emailField = {
+  name: 'email',
+  label: 'Email',
+  type: 'email',
+  required: true
+};
+
 export const loginForm = {
-  fields: [
-    {
-      name: 'username',
-      label: 'Username',
-      type: 'text',
-      required: true
-    },
-    {
-      name: 'password',
-      label: 'Password',
-      type: 'password',
-      required: true
-    }
-  ],
+  fields: [usernameField, passwordField],
   action: {
     name: 'login',
     label: 'Login',
@@ -32,23 +40,7 @@ export const loginForm = {
 };
 
 export const signupForm = {
-  fields: [
-    {
-      name: 'username',
-      label: 'Username',
-      type: 'text'
-    },
-    {
-      name: 'email',
-      label: 'Email',
-      type: 'email'
-    },
-    {
-      name: 'password',
-      label: 'Password',
-      type: 'password'
-    }
-  ],
+  fields: [usernameField, emailField, passwordField],
   action: {
     name: 'signup',
     label: 'Sign up',
@@ -58,13 +50,7 @@ export const signupForm = {
 };
 
 export const resetPasswordForm = {
-  fields: [
-    {
-      name: 'email',
-      label: 'Email',
-      type: 'email'
-    }
-  ],
+  fields: [emailField],
   action: {
     name: 'reset_password',
     label: 'Reset Password',
