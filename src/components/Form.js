@@ -1,16 +1,12 @@
 import React from 'react';
-import { withStyles, Button, TextField } from '@material-ui/core';
+import { withStyles, TextField } from '@material-ui/core';
 
 const styles = {
-  textField: {},
-  mainButton: {
-    borderRadius: 15,
-    margin: '1em 0'
-  }
+  textField: {}
 };
 
 const Form = props => {
-  const { fields, handleSubmit, action, classes } = props;
+  const { fields, handleValueChange, values, isLoading, errors } = props;
   return (
     <form>
       {!fields ? (
@@ -23,8 +19,12 @@ const Form = props => {
             label={field.label}
             type={field.type}
             required={field.required}
-            helperText={field.helperText}
+            helperText={errors[field.name]}
+            disabled={isLoading}
+            error={!!errors[field.name]}
             fullWidth
+            onChange={handleValueChange(field.name)}
+            values={values[field.name]}
             InputLabelProps={{
               shrink: true
             }}
@@ -32,16 +32,6 @@ const Form = props => {
           />
         ))
       )}
-      <Button
-        fullWidth
-        color="primary"
-        variant={'raised'}
-        id={action.name}
-        onClick={handleSubmit}
-        className={classes.mainButton}
-      >
-        {action.label}
-      </Button>
     </form>
   );
 };

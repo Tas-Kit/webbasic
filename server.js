@@ -7,6 +7,7 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
+  console.log('server created');
 
   server.set('port', process.env.PORT || 3000);
 
