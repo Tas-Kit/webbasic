@@ -1,11 +1,9 @@
 let baseUrl;
 
 if (process.env.NODE_ENV === 'development') {
-  baseUrl =
-    'http://userservice-sandbox.taskit.13.56.178.175.xip.io/api/v1/userservice';
+  baseUrl = 'http://sandbox1.tas-kit.com/api/v1/userservice';
 } else {
-  baseUrl =
-    'http://userservice-sandbox.taskit.13.56.178.175.xip.io/api/v1/userservice';
+  baseUrl = 'http://sandbox1.tas-kit.com/api/v1/userservice';
   if (typeof window !== 'undefined') {
     const { location } = window;
     baseUrl = `${location.protocol}//${location.host}/api/v1`; // (or whatever)
