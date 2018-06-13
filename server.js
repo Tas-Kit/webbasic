@@ -1,6 +1,6 @@
 const express = require('express');
 const next = require('next');
-
+const { parse } = require('url');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -10,6 +10,19 @@ app.prepare().then(() => {
   console.log('server created');
 
   server.set('port', process.env.PORT || 3000);
+
+  server.get('/web/basic/login', (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    const { query } = parsedUrl;
+    const actualPage = '/login';
+    app.render(req, res, actualPage, query);
+  });
+  server.get('/web/basic/signup', (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    const { query } = parsedUrl;
+    const actualPage = '/signup';
+    app.render(req, res, actualPage, query);
+  });
 
   server.use((req, res, next) => {
     const test = /\?[^]*\//.test(req.url);
