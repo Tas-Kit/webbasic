@@ -11,23 +11,11 @@ app.prepare().then(() => {
 
   server.set('port', process.env.PORT || 3000);
 
-  server.get('/web/basic/login', (req, res) => {
-    const parsedUrl = parse(req.url, true);
-    const { query } = parsedUrl;
-    const actualPage = '/login';
-    app.render(req, res, actualPage, query);
-  });
-  server.get('/web/basic/signup', (req, res) => {
-    const parsedUrl = parse(req.url, true);
-    const { query } = parsedUrl;
-    const actualPage = '/signup';
-    app.render(req, res, actualPage, query);
-  });
-
   server.use((req, res, next) => {
     const test = /\?[^]*\//.test(req.url);
     if (req.url.substr(-1) === '/' && req.url.length > 1 && !test)
       req.url = req.url.slice(0, -1);
+    req.url = req.url.replace('/web/basic', '');
     next();
   });
 
