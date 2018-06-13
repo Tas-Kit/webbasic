@@ -24,17 +24,17 @@ export const loginForm = {
   action: {
     name: 'login',
     label: 'Login',
-    url: '/login/',
+    url: '/userservice/exempt/login/',
     redirectUrl: '/main/'
   },
   secondaryActions: [
     {
       name: 'forgot password',
-      url: '/reset_password/'
+      url: '/userservice/exempt/reset_password/'
     },
     {
       name: 'sign up',
-      url: '/signup/'
+      url: '/userservice/exempt/signup/'
     }
   ],
   rules: {
