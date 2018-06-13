@@ -36,7 +36,6 @@ class FormContainer extends React.Component {
       [key]: e.target.value
     };
     const validation = new Validator(newValues, rules);
-    console.log(validation);
     if (validation.passes()) {
       this.setState({
         ...this.state,
