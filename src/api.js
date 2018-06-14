@@ -6,7 +6,9 @@ if (process.env.NODE_ENV === 'development') {
   baseUrl = 'http://sandbox1.tas-kit.com/api/v1/userservice/exempt';
   if (typeof window !== 'undefined') {
     const { location } = window;
-    baseUrl = `${location.protocol}//${location.host}/api/v1`; // (or whatever)
+    baseUrl = `${location.protocol}//${
+      location.host
+    }/api/v1/userservice/exempt`; // (or whatever)
   }
 }
 
@@ -41,21 +43,12 @@ export const post = async (url, payload) => {
   const json = await fetch(`${baseUrl}${url}`, {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     method: 'POST',
+    credentials: 'same-origin',
     body: JSON.stringify(payload)
   }).then(res => transformResponse(res));
   return json;
 };
 
-export const postLogin = payload => {
-  return post('/login/', payload);
-};
-
-export const postSignup = payload => {
-  return post('/signup/', payload);
-};
-
 export default {
-  post,
-  postLogin,
-  postSignup
+  post
 };
