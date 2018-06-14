@@ -1,12 +1,14 @@
 let baseUrl;
 
 if (process.env.NODE_ENV === 'development') {
-  baseUrl = 'http://sandbox1.tas-kit.com/api/v1';
+  baseUrl = 'http://sandbox1.tas-kit.com/api/v1/userservice/exempt';
 } else {
-  baseUrl = 'http://sandbox1.tas-kit.com/api/v1';
+  baseUrl = 'http://sandbox1.tas-kit.com/api/v1/userservice/exempt';
   if (typeof window !== 'undefined') {
     const { location } = window;
-    baseUrl = `${location.protocol}//${location.host}/api/v1`; // (or whatever)
+    baseUrl = `${location.protocol}//${
+      location.host
+    }/api/v1/userservice/exempt`; // (or whatever)
   }
 }
 
@@ -46,16 +48,6 @@ export const post = async (url, payload) => {
   return json;
 };
 
-export const postLogin = payload => {
-  return post('/userservice/exempt/login/', payload);
-};
-
-export const postSignup = payload => {
-  return post('/userservice/exempt/signup/', payload);
-};
-
 export default {
-  post,
-  postLogin,
-  postSignup
+  post
 };
