@@ -25,7 +25,7 @@ export const loginForm = {
     name: 'login',
     label: 'Login',
     url: '/login/',
-    redirectUrl: 'web/main/'
+    redirectUrl: '/web/main/'
   },
   secondaryActions: [
     {
@@ -49,7 +49,7 @@ export const signupForm = {
     name: 'signup',
     label: 'Sign up',
     url: '/signup/',
-    redirectUrl: 'web/main/'
+    redirectUrl: '/web/main/'
   },
   rules: {
     username: 'required',
