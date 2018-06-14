@@ -43,6 +43,7 @@ export const post = async (url, payload) => {
   const json = await fetch(`${baseUrl}${url}`, {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     method: 'POST',
+    credentials: 'same-origin',
     body: JSON.stringify(payload)
   }).then(res => transformResponse(res));
   return json;
