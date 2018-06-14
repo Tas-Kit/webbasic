@@ -63,7 +63,6 @@ class FormContainer extends React.Component {
         .then(result => {
           const destination =
             window.location.origin + this.props.form.action.redirectUrl;
-          console.log(destination);
           window.location = destination;
         })
         .catch(err =>
