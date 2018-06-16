@@ -4,6 +4,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import getPageContext from './getPageContext';
 import { Grid, colors } from '@material-ui/core';
+import AutoIntlProvider from './components/AutoIntlProvider';
 
 function withRoot(Component) {
   class WithRoot extends React.Component {
@@ -11,6 +12,9 @@ function withRoot(Component) {
       super(props);
 
       this.pageContext = this.props.pageContext || getPageContext();
+      this.state = {
+        locale: 'en'
+      };
     }
 
     componentDidMount() {
@@ -19,6 +23,11 @@ function withRoot(Component) {
       if (jssStyles && jssStyles.parentNode) {
         jssStyles.parentNode.removeChild(jssStyles);
       }
+      if (navigator) {
+        this.setState({
+          locale: navigator.language.split(/[-_]/)[0]
+        });
+      }
     }
 
     pageContext = null;
@@ -26,26 +35,28 @@ function withRoot(Component) {
     render() {
       // MuiThemeProvider makes the theme available down the React tree thanks to React context.
       return (
-        <MuiThemeProvider
-          theme={this.pageContext.theme}
-          sheetsManager={this.pageContext.sheetsManager}
-        >
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Grid
-            style={{
-              background: `radial-gradient(${colors.lightBlue[50]}, ${
-                colors.lightBlue[300]
-              })`,
-              minHeight: '100vh'
-            }}
-            container
-            justify="center"
-            alignItems="center"
+        <AutoIntlProvider locale={this.state.locale}>
+          <MuiThemeProvider
+            theme={this.pageContext.theme}
+            sheetsManager={this.pageContext.sheetsManager}
           >
-            <Component {...this.props} />
-          </Grid>
-        </MuiThemeProvider>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Grid
+              style={{
+                background: `radial-gradient(${colors.lightBlue[50]}, ${
+                  colors.lightBlue[300]
+                })`,
+                minHeight: '100vh'
+              }}
+              container
+              justify="center"
+              alignItems="center"
+            >
+              <Component {...this.props} />
+            </Grid>
+          </MuiThemeProvider>
+        </AutoIntlProvider>
       );
     }
   }

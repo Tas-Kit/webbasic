@@ -1,12 +1,14 @@
 const usernameField = {
   name: 'username',
   label: 'Username',
+  labelId: 'username',
   type: 'text',
   required: true
 };
 
 const passwordField = {
   name: 'password',
+  labelId: 'password',
   label: 'Password',
   type: 'password',
   required: true
@@ -14,6 +16,7 @@ const passwordField = {
 
 const emailField = {
   name: 'email',
+  labelId: 'email',
   label: 'Email',
   type: 'email',
   required: true
@@ -24,16 +27,19 @@ export const loginForm = {
   action: {
     name: 'login',
     label: 'Login',
+    labelId: 'loginButton',
     url: '/login/',
     redirectUrl: '/web/main/'
   },
   secondaryActions: [
     {
       name: 'forgot password',
+      nameId: 'forgotPasswordButton',
       url: '/reset_password/'
     },
     {
       name: 'sign up',
+      nameId: 'signUpButton',
       url: '/signup/'
     }
   ],
@@ -48,6 +54,7 @@ export const signupForm = {
   action: {
     name: 'signup',
     label: 'Sign up',
+    labelId: 'signUpButton',
     url: '/signup/',
     redirectUrl: '/web/main/'
   },
