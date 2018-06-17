@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles, TextField } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 
 const styles = {
   textField: {}
@@ -16,7 +17,12 @@ const Form = props => {
           <TextField
             id={field.name}
             key={field.name}
-            label={field.label}
+            label={
+              <FormattedMessage
+                id={field.labelId}
+                defaultMessage={field.label}
+              />
+            }
             type={field.type}
             required={field.required}
             helperText={errors[field.name]}

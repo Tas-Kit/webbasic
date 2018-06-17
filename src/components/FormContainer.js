@@ -4,6 +4,7 @@ import Validator from 'validatorjs';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import Form from './Form';
 import { post } from '../api';
+import { FormattedMessage } from 'react-intl';
 
 const styles = {
   formContainer: {
@@ -61,7 +62,9 @@ class FormContainer extends React.Component {
       });
       post(url, this.state.values)
         .then(result => {
-          window.location.replace(this.props.form.action.redirectUrl);
+          const destination =
+            window.location.origin + this.props.form.action.redirectUrl;
+          window.location = destination;
         })
         .catch(err =>
           this.setState({
@@ -113,7 +116,10 @@ class FormContainer extends React.Component {
             className={classes.mainButton}
             disabled={this.state.isLoading || this.state.isError}
           >
-            {action.label}
+            <FormattedMessage
+              id={action.labelId}
+              defaultMessage={action.label}
+            />
           </Button>
         </Grid>
         <Grid item>

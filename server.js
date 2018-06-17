@@ -19,6 +19,10 @@ app.prepare().then(() => {
     next();
   });
 
+  server.get('/healthcheck', (req, res) => {
+    res.status(200).send('healthy');
+  });
+
   server.get('*', (req, res) => {
     return handle(req, res);
   });
