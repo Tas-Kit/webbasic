@@ -20,7 +20,7 @@ app.prepare().then(() => {
   });
 
   server.get('/healthcheck', (req, res) => {
-    res.status(200).send('healthy');
+    res.status(200).send('HEALTHY');
   });
 
   server.get('*', (req, res) => {
