@@ -70,7 +70,12 @@ export const resetPasswordForm = {
   action: {
     name: 'reset_password',
     label: 'Reset Password',
-    url: '#'
+    labelId: 'resetPasswordButton',
+    url: '/reset_password/',
+    redirectUrl: '/web/main/'
+  },
+  rules: {
+    email: 'required|email'
   }
 };
 

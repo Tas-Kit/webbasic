@@ -30,10 +30,8 @@ const transformResponse = res => {
     case 401:
       handleTimeOut();
       break;
-    case 400:
-      return res.json().then(errors => Promise.reject(errors));
     default:
-      defaultOnError(res);
+      return res.json().then(errors => Promise.reject(errors));
   }
   return null;
 };
