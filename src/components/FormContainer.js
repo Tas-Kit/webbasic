@@ -87,13 +87,7 @@ class FormContainer extends React.Component {
     const { fields, action, secondaryActions } = form;
 
     return (
-      <Grid
-        container
-        item
-        direction="column"
-        xs
-        className={classes.formContainer}
-      >
+      <Grid container direction="column" className={classes.formContainer}>
         <Grid item xs>
           <Form
             fields={fields}

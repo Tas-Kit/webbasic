@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import { Grid } from '@material-ui/core';
 import Card from './Card';
 import Decoration from './Decoration';
-import FormContainer from './FormContainer';
 
 class AccountCard extends Component {
   render() {
-    const { form } = this.props;
+    const { children } = this.props;
     return (
       <Card>
         <Decoration />
-        <FormContainer form={form} />
+        <Grid item xs>
+          {children}
+        </Grid>
       </Card>
     );
   }
