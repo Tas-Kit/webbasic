@@ -6,6 +6,6 @@ import FormContainer from '../src/components/FormContainer';
 
 export default withRoot(() => (
   <AccountCard>
-    <FormContainer form={resetPasswordForm} />
+    <FormContainer form={resetPasswordForm} onSubmitSucceed={console.log} />
   </AccountCard>
 ));
