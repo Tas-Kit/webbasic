@@ -5,7 +5,9 @@ const en = {
   loginButton: 'Login',
   forgotPasswordButton: 'Forgot Password',
   signUpButton: 'Sign Up',
-  resetPasswordButton: 'Reset Password'
+  resetPasswordButton: 'Reset Password',
+  code: 'Verification Code',
+  getCodeButton: 'Get Code'
 };
 
 export default en;
