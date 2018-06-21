@@ -31,7 +31,8 @@ class ResetPasswordContainer extends React.Component {
       values: {},
       isLoading: false,
       isError,
-      errors: {}
+      errors: {},
+      timerCount: 60
     };
   }
 
@@ -64,7 +65,6 @@ class ResetPasswordContainer extends React.Component {
       });
       post(url, this.state.values)
         .then(result => {
-          // If user does not handle success, form will simply redirect
           const destination =
             window.location.origin + this.props.form.action.redirectUrl;
           window.location = destination;
@@ -80,6 +80,18 @@ class ResetPasswordContainer extends React.Component {
             isLoading: false
           })
         );
+    }
+  };
+
+  decreaseTimerCount = () => {
+    if (this.state.timerCount === 0) {
+      clearInterval(this.timer);
+      this.timer = null;
+      this.setState({ timerCount: 60 });
+    } else {
+      this.setState(prevState => ({
+        timerCount: prevState.timerCount - 1
+      }));
     }
   };
 
@@ -102,12 +114,18 @@ class ResetPasswordContainer extends React.Component {
           })
         );
     }
+    if (!this.timer) this.timer = setInterval(this.decreaseTimerCount, 1000);
   };
+
+  componentWillUnmount() {
+    // clear timer before mount
+    if (this.timer) clearInterval(this.timer);
+  }
 
   render() {
     const { classes } = this.props;
     const { fields, action, secondaryActions } = this.form;
-    const { isLoading, errors, values, isError } = this.state;
+    const { isLoading, errors, values, isError, timerCount } = this.state;
 
     return (
       <Grid container direction="column" className={classes.formContainer}>
@@ -155,10 +173,17 @@ class ResetPasswordContainer extends React.Component {
                         onClick={this.handleGetCodeClick}
                         className={classes.mainButton}
                         disabled={
-                          isLoading || !values['email'] || !!errors['email']
+                          isLoading ||
+                          !values['email'] ||
+                          !!errors['email'] ||
+                          timerCount !== 60
                         }
                       >
-                        <FormattedMessage id={'getCodeButton'} />
+                        {timerCount === 60 ? (
+                          <FormattedMessage id={'getCodeButton'} />
+                        ) : (
+                          timerCount
+                        )}
                       </Button>
                     </Grid>
                   )}
