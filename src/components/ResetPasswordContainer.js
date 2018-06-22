@@ -66,7 +66,7 @@ class ResetPasswordContainer extends React.Component {
       post(url, this.state.values)
         .then(result => {
           const destination =
-            window.location.origin + this.props.form.action.redirectUrl;
+            window.location.origin + this.form.action.redirectUrl;
           window.location = destination;
         })
         .catch(err => {
