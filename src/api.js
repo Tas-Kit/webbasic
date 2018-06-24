@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
     const { location } = window;
     baseUrl = `${location.protocol}//${
       location.host
-    }/api/v1/userservice/exempt`; // (or whatever)
+    }/api/v1/userservice/exempt`; // (or whatever) trigger build
   }
 }
 
