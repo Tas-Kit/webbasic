@@ -1,9 +1,9 @@
 let baseUrl;
 
 if (process.env.NODE_ENV === 'development') {
-  baseUrl = 'http://sandbox1.tas-kit.com/api/v1/userservice/exempt';
+  baseUrl = 'http://sandbox.tas-kit.com/api/v1/userservice/exempt';
 } else {
-  baseUrl = 'http://sandbox1.tas-kit.com/api/v1/userservice/exempt';
+  baseUrl = 'http://sandbox.tas-kit.com/api/v1/userservice/exempt';
   if (typeof window !== 'undefined') {
     const { location } = window;
     baseUrl = `${location.protocol}//${
@@ -30,10 +30,8 @@ const transformResponse = res => {
     case 401:
       handleTimeOut();
       break;
-    case 400:
-      return res.json().then(errors => Promise.reject(errors));
     default:
-      defaultOnError(res);
+      return res.json().then(errors => Promise.reject(errors));
   }
   return null;
 };

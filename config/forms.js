@@ -1,3 +1,5 @@
+// trigger build
+
 const usernameField = {
   name: 'username',
   label: 'Username',
@@ -19,6 +21,14 @@ const emailField = {
   labelId: 'email',
   label: 'Email',
   type: 'email',
+  required: true
+};
+
+const verificationField = {
+  name: 'code',
+  labelId: 'code',
+  label: 'Verification Code',
+  type: 'text',
   required: true
 };
 
@@ -66,11 +76,17 @@ export const signupForm = {
 };
 
 export const resetPasswordForm = {
-  fields: [emailField],
+  fields: [emailField, verificationField, passwordField],
   action: {
     name: 'reset_password',
     label: 'Reset Password',
-    url: '#'
+    labelId: 'resetPasswordButton',
+    url: '/set_password/',
+    redirectUrl: '/web/basic/login/'
+  },
+  rules: {
+    email: 'required|email',
+    password: 'required|min:8'
   }
 };
 

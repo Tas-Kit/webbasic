@@ -55,6 +55,7 @@ class FormContainer extends React.Component {
   };
 
   handleSubmit = url => () => {
+    const { onSubmitSucceed, onSubmitFail } = this.props;
     if (!this.state.isError) {
       this.setState({
         ...this.state,
@@ -62,17 +63,25 @@ class FormContainer extends React.Component {
       });
       post(url, this.state.values)
         .then(result => {
-          const destination =
-            window.location.origin + this.props.form.action.redirectUrl;
-          window.location = destination;
+          if (onSubmitSucceed) {
+            onSubmitSucceed(result, this.state.values);
+          } else {
+            // If user does not handle success, form will simply redirect
+            const destination =
+              window.location.origin + this.props.form.action.redirectUrl;
+            window.location = destination;
+          }
         })
-        .catch(err =>
+        .catch(err => {
+          if (onSubmitFail) {
+            onSubmitFail(err, this.state.values);
+          }
           this.setState({
             ...this.state,
             errors: err,
             isError: true
-          })
-        )
+          });
+        })
         .finally(() =>
           this.setState({
             ...this.state,
@@ -87,13 +96,7 @@ class FormContainer extends React.Component {
     const { fields, action, secondaryActions } = form;
 
     return (
-      <Grid
-        container
-        item
-        direction="column"
-        xs
-        className={classes.formContainer}
-      >
+      <Grid container direction="column" className={classes.formContainer}>
         <Grid item xs>
           <Form
             fields={fields}
