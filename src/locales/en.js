@@ -7,7 +7,8 @@ const en = {
   signUpButton: 'Sign Up',
   resetPasswordButton: 'Reset Password',
   code: 'Verification Code',
-  getCodeButton: 'Get Code'
+  getCodeButton: 'Get Code',
+  usernameOrEmail: 'Username/Email'
 };
 
 export default en;

@@ -5,7 +5,13 @@ const usernameField = {
   type: 'text',
   required: true
 };
-
+const usernameOrEmailField = {
+  name: 'username',
+  label: 'Username/Email',
+  labelId: 'usernameOrEmail',
+  type: 'text',
+  required: true
+};
 const passwordField = {
   name: 'password',
   labelId: 'password',
@@ -31,7 +37,7 @@ const verificationField = {
 };
 
 export const loginForm = {
-  fields: [usernameField, passwordField],
+  fields: [usernameOrEmailField, passwordField],
   action: {
     name: 'login',
     label: 'Login',
