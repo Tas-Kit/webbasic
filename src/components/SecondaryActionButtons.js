@@ -7,7 +7,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const SecondaryActionButtons = props => {
   const { secondaryActions } = props;
   return (
-    <Grid container justify={'space-between'}>
+    <Grid container justify={'space-between'} wrap="nowrap">
       {secondaryActions.map(action => (
         <Grid key={action.name}>
           <Link href={(isProd ? '/web/basic' : '') + action.url}>
