@@ -58,7 +58,7 @@ class ResetPasswordContainer extends React.Component {
     }
   };
 
-  handleSubmit = url => () => {
+  sendAction = url => {
     if (!this.state.isError) {
       this.setState({
         isLoading: true
@@ -80,6 +80,16 @@ class ResetPasswordContainer extends React.Component {
             isLoading: false
           })
         );
+    }
+  };
+
+  handleSubmit = url => () => {
+    this.sendAction(url);
+  };
+
+  handleKeyDown = url => e => {
+    if (e.key === 'Enter') {
+      this.sendAction(url);
     }
   };
 
@@ -129,7 +139,7 @@ class ResetPasswordContainer extends React.Component {
 
     return (
       <Grid container direction="column" className={classes.formContainer}>
-        <Grid item xs>
+        <Grid item xs onKeyDown={this.handleKeyDown(action.url)}>
           <form>
             {fields.map(field => {
               return (

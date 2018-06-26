@@ -54,9 +54,9 @@ class FormContainer extends React.Component {
     }
   };
 
-  handleSubmit = url => () => {
+  sendAction = url => {
     const { onSubmitSucceed, onSubmitFail } = this.props;
-    if (!this.state.isError) {
+    if (this.state.values['username'] && !this.state.isError) {
       this.setState({
         ...this.state,
         isLoading: true
@@ -91,13 +91,23 @@ class FormContainer extends React.Component {
     }
   };
 
+  handleSubmit = url => () => {
+    this.sendAction(url);
+  };
+
+  handleKeyDown = url => e => {
+    if (e.key === 'Enter') {
+      this.sendAction(url);
+    }
+  };
+
   render() {
     const { classes, form } = this.props;
     const { fields, action, secondaryActions } = form;
 
     return (
       <Grid container direction="column" className={classes.formContainer}>
-        <Grid item xs>
+        <Grid item xs onKeyDown={this.handleKeyDown(action.url)}>
           <Form
             fields={fields}
             values={this.state.values}
