@@ -26,7 +26,7 @@ class MyDocument extends Document {
             name="theme-color"
             content={pageContext.theme.palette.primary.main}
           />
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/web/basic/favicon.ico/" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
