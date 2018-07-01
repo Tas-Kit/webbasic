@@ -1,12 +1,8 @@
 const express = require('express');
 const next = require('next');
-const { join } = require('path');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const { parse } = require('url');
-
-const rootStaticFiles = ['/favicon.ico'];
 
 app.prepare().then(() => {
   const server = express();
@@ -19,15 +15,12 @@ app.prepare().then(() => {
     if (req.url.substr(-1) === '/' && req.url.length > 1 && !test)
       req.url = req.url.slice(0, -1);
     req.url = req.url.replace('/web/basic', '');
-    const parsedUrl = parse(req.url, true);
-    console.log(parsedUrl);
-    if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
-      const path = join(__dirname, 'static', parsedUrl.pathname);
-      app.serveStatic(req, res, path);
-    } else {
-      next();
-    }
+    next();
   });
+
+  server.use(express.static('static'));
+  server.use(express.static('.next/static'));
+  server.use(express.static('.next'));
 
   server.get('/healthcheck', (req, res) => {
     res.status(200).send('HEALTHY');
