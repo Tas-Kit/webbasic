@@ -4,7 +4,7 @@ import { Paper, withStyles, Grid } from '@material-ui/core';
 const styles = {
   cardWrapper: {
     position: 'relative',
-    minWidth: 640,
+    width: 680,
     padding: 0
   }
 };
