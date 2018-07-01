@@ -1,6 +1,5 @@
 const express = require('express');
 const next = require('next');
-const { parse } = require('url');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -18,6 +17,10 @@ app.prepare().then(() => {
     req.url = req.url.replace('/web/basic', '');
     next();
   });
+
+  server.use(express.static('static'));
+  server.use(express.static('.next/static'));
+  server.use(express.static('.next'));
 
   server.get('/healthcheck', (req, res) => {
     res.status(200).send('HEALTHY');
