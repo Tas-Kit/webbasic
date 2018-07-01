@@ -15,11 +15,12 @@ app.prepare().then(() => {
   server.set('port', process.env.PORT || 3000);
 
   server.use((req, res, next) => {
-    const parsedUrl = parse(req.url, true);
     const test = /\?[^]*\//.test(req.url);
     if (req.url.substr(-1) === '/' && req.url.length > 1 && !test)
       req.url = req.url.slice(0, -1);
     req.url = req.url.replace('/web/basic', '');
+    const parsedUrl = parse(req.url, true);
+    console.log(parsedUrl);
     if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
       const path = join(__dirname, 'static', parsedUrl.pathname);
       app.serveStatic(req, res, path);
