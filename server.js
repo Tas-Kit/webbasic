@@ -10,7 +10,6 @@ app.prepare().then(() => {
   console.log('server created');
 
   server.set('port', process.env.PORT || 3000);
-  server.use(express.static(join(__dirname, '/static')));
 
   server.use((req, res, next) => {
     const test = /\?[^]*\//.test(req.url);
@@ -19,6 +18,8 @@ app.prepare().then(() => {
     req.url = req.url.replace('/web/basic', '');
     next();
   });
+
+  server.use(express.static(join(__dirname, '/static')));
 
   server.get('/healthcheck', (req, res) => {
     res.status(200).send('HEALTHY');
