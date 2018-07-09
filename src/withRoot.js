@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import getPageContext from './getPageContext';
 import { Grid, colors } from '@material-ui/core';
 import AutoIntlProvider from './components/AutoIntlProvider';
-import Progress from './components/Progress';
 
 function withRoot(Component) {
   class WithRoot extends React.Component {
@@ -43,7 +42,6 @@ function withRoot(Component) {
           >
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Progress />
             <Grid
               style={{
                 background: `radial-gradient(${colors.lightBlue[50]}, ${
