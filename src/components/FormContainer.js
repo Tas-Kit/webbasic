@@ -22,11 +22,13 @@ const styles = {
 class FormContainer extends React.Component {
   constructor(props) {
     super(props);
+    const { rules } = this.props.form;
+    const validation = new Validator({}, rules);
     this.state = {
       values: {},
       isLoading: false,
-      isError: false,
-      errors: {}
+      isError: !validation.passes(),
+      errors: validation.passes() ? {} : validation.errors.all()
     };
   }
 
