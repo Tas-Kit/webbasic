@@ -3,6 +3,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import JssProvider from 'react-jss/lib/JssProvider';
 import flush from 'styled-jsx/server';
 import getPageContext from '../src/getPageContext';
+import 'validatorjs/dist/lang/zh';
 
 class MyDocument extends Document {
   render() {
@@ -31,7 +32,6 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
           />
-          <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
         </Head>
         <body>
           <Main />
