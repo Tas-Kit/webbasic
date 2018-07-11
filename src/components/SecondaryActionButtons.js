@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Button, CircularProgress } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
+const isProd = process.env.NODE_ENV === 'production';
 
 class SecondaryActionButtons extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class SecondaryActionButtons extends React.Component {
       this.setState({
         isLoading: true
       });
-      const destination = window.location.origin + url;
+      const destination =
+        window.location.origin + (isProd ? '/web/basic' : '') + url;
       window.location = destination;
     };
   };

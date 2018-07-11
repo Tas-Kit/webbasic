@@ -132,6 +132,13 @@ class ResetPasswordContainer extends React.Component {
     if (this.timer) clearInterval(this.timer);
   }
 
+  componentDidMount() {
+    if (navigator) {
+      const locale = navigator.language.split(/[-_]/)[0];
+      Validator.useLang(locale);
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const { fields, action, secondaryActions } = this.form;

@@ -6,8 +6,6 @@ import Form from './Form';
 import { post } from '../api';
 import { FormattedMessage } from 'react-intl';
 
-Validator.useLang('zh');
-
 const styles = {
   formContainer: {
     padding: '2em'
@@ -104,6 +102,13 @@ class FormContainer extends React.Component {
       this.sendAction(url);
     }
   };
+
+  componentDidMount() {
+    if (navigator) {
+      const locale = navigator.language.split(/[-_]/)[0];
+      Validator.useLang(locale);
+    }
+  }
 
   render() {
     const { classes, form } = this.props;
