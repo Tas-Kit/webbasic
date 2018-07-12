@@ -1,5 +1,12 @@
 import React from 'react';
-import { withStyles, Grid, Button, colors, TextField } from '@material-ui/core';
+import {
+  withStyles,
+  Grid,
+  Button,
+  colors,
+  TextField,
+  CircularProgress
+} from '@material-ui/core';
 import Validator from 'validatorjs';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import { post } from '../api';
@@ -30,6 +37,7 @@ class ResetPasswordContainer extends React.Component {
     this.state = {
       values: {},
       isLoading: false,
+      isResetLoading: false,
       isError,
       errors: {},
       timerCount: 60
@@ -61,7 +69,7 @@ class ResetPasswordContainer extends React.Component {
   sendAction = url => {
     if (!this.state.isError) {
       this.setState({
-        isLoading: true
+        isResetLoading: true
       });
       post(url, this.state.values)
         .then(result => {
@@ -77,7 +85,7 @@ class ResetPasswordContainer extends React.Component {
         })
         .finally(() =>
           this.setState({
-            isLoading: false
+            isResetLoading: false
           })
         );
     }
@@ -142,7 +150,14 @@ class ResetPasswordContainer extends React.Component {
   render() {
     const { classes } = this.props;
     const { fields, action, secondaryActions } = this.form;
-    const { isLoading, errors, values, isError, timerCount } = this.state;
+    const {
+      isLoading,
+      errors,
+      values,
+      isError,
+      timerCount,
+      isResetLoading
+    } = this.state;
 
     return (
       <Grid container direction="column" className={classes.formContainer}>
@@ -217,13 +232,17 @@ class ResetPasswordContainer extends React.Component {
             color="primary"
             variant={'raised'}
             className={classes.mainButton}
-            disabled={isLoading || isError}
+            disabled={isLoading || isResetLoading || isError}
             onClick={this.handleSubmit(action.url)}
           >
-            <FormattedMessage
-              id={action.labelId}
-              defaultMessage={action.label}
-            />
+            {isResetLoading ? (
+              <CircularProgress />
+            ) : (
+              <FormattedMessage
+                id={action.labelId}
+                defaultMessage={action.label}
+              />
+            )}
           </Button>
         </Grid>
         <Grid item>
