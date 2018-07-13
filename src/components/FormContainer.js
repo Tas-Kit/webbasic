@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  withStyles,
-  Grid,
-  Button,
-  colors,
-  CircularProgress
-} from '@material-ui/core';
+import { withStyles, Grid, Button, colors } from '@material-ui/core';
 import Validator from 'validatorjs';
+import { FormattedMessage } from 'react-intl';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import Form from './Form';
 import { post } from '../api';
-import { FormattedMessage } from 'react-intl';
+import LoadingButton from './LoadingButton';
 
 const styles = {
   formContainer: {
@@ -135,7 +130,7 @@ class FormContainer extends React.Component {
           {nonFieldError && (
             <p className={classes.errorMessage}>{nonFieldError}</p>
           )}
-          <Button
+          <LoadingButton
             fullWidth
             color="primary"
             variant={'raised'}
@@ -143,16 +138,14 @@ class FormContainer extends React.Component {
             onClick={this.handleSubmit(action.url)}
             className={classes.mainButton}
             disabled={isLoading || isError}
+            isLoading={isLoading}
+            progressProps={{ size: 25 }}
           >
-            {isLoading ? (
-              <CircularProgress />
-            ) : (
-              <FormattedMessage
-                id={action.labelId}
-                defaultMessage={action.label}
-              />
-            )}
-          </Button>
+            <FormattedMessage
+              id={action.labelId}
+              defaultMessage={action.label}
+            />
+          </LoadingButton>
         </Grid>
         <Grid item>
           {secondaryActions && (

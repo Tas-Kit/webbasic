@@ -1,17 +1,11 @@
 import React from 'react';
-import {
-  withStyles,
-  Grid,
-  Button,
-  colors,
-  TextField,
-  CircularProgress
-} from '@material-ui/core';
+import { withStyles, Grid, Button, colors, TextField } from '@material-ui/core';
 import Validator from 'validatorjs';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import { post } from '../api';
 import { FormattedMessage } from 'react-intl';
 import { resetPasswordForm } from '../../config/forms';
+import LoadingButton from './LoadingButton';
 
 const styles = {
   formContainer: {
@@ -176,10 +170,8 @@ class ResetPasswordContainer extends React.Component {
                     <TextField
                       id={field.name}
                       label={
-                        <FormattedMessage
-                          id={field.labelId}
-                          // defaultMessage={field.label}
-                        />
+                        <FormattedMessage id={field.labelId} />
+                        // defaultMessage={field.label}
                       }
                       type={field.type}
                       required={field.required}
@@ -189,9 +181,7 @@ class ResetPasswordContainer extends React.Component {
                       fullWidth
                       onChange={this.handleValueChange(field.name)}
                       values={values[field.name]}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
+                      InputLabelProps={{ shrink: true }}
                       margin="normal"
                     />
                   </Grid>
@@ -227,23 +217,21 @@ class ResetPasswordContainer extends React.Component {
           {errors['non_field_errors'] && (
             <p className={classes.errorMessage}>{errors['non_field_errors']}</p>
           )}
-          <Button
+          <LoadingButton
             fullWidth
             color="primary"
             variant={'raised'}
             className={classes.mainButton}
             disabled={isLoading || isResetLoading || isError}
             onClick={this.handleSubmit(action.url)}
+            isLoading={isResetLoading}
+            progressProps={{ size: 25 }}
           >
-            {isResetLoading ? (
-              <CircularProgress />
-            ) : (
-              <FormattedMessage
-                id={action.labelId}
-                defaultMessage={action.label}
-              />
-            )}
-          </Button>
+            <FormattedMessage
+              id={action.labelId}
+              defaultMessage={action.label}
+            />
+          </LoadingButton>
         </Grid>
         <Grid item>
           {secondaryActions && (
