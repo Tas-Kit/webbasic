@@ -39,7 +39,10 @@ const transformResponse = res => {
 export const post = async (url, payload) => {
   // use async so thrwoed errors in transformResponse can be caught
   const json = await fetch(`${baseUrl}${url}`, {
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify(payload)

@@ -1,5 +1,11 @@
 import React from 'react';
-import { withStyles, Grid, Button, colors } from '@material-ui/core';
+import {
+  withStyles,
+  Grid,
+  Button,
+  colors,
+  CircularProgress
+} from '@material-ui/core';
 import Validator from 'validatorjs';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import Form from './Form';
@@ -22,11 +28,14 @@ const styles = {
 class FormContainer extends React.Component {
   constructor(props) {
     super(props);
+    const { rules } = this.props.form;
+    const validation = new Validator({}, rules);
     this.state = {
       values: {},
       isLoading: false,
-      isError: false,
-      errors: {}
+      isError: !validation.passes(),
+      errors: {},
+      nonFieldError: ''
     };
   }
 
@@ -39,17 +48,17 @@ class FormContainer extends React.Component {
     const validation = new Validator(newValues, rules);
     if (validation.passes()) {
       this.setState({
-        ...this.state,
         values: newValues,
         isError: false,
-        errors: {}
+        errors: {},
+        nonFieldError: ''
       });
     } else {
       this.setState({
-        ...this.state,
         values: newValues,
         isError: true,
-        errors: validation.errors.all()
+        errors: validation.errors.all(),
+        nonFieldError: ''
       });
     }
   };
@@ -58,7 +67,6 @@ class FormContainer extends React.Component {
     const { onSubmitSucceed, onSubmitFail } = this.props;
     if (this.state.values['username'] && !this.state.isError) {
       this.setState({
-        ...this.state,
         isLoading: true
       });
       post(url, this.state.values)
@@ -77,14 +85,15 @@ class FormContainer extends React.Component {
             onSubmitFail(err, this.state.values);
           }
           this.setState({
-            ...this.state,
             errors: err,
+            nonFieldError: err['non_field_errors']
+              ? err['non_field_errors']
+              : err.message,
             isError: true
           });
         })
         .finally(() =>
           this.setState({
-            ...this.state,
             isLoading: false
           })
         );
@@ -101,24 +110,30 @@ class FormContainer extends React.Component {
     }
   };
 
+  componentDidMount() {
+    if (navigator) {
+      const locale = navigator.language.split(/[-_]/)[0];
+      Validator.useLang(locale);
+    }
+  }
+
   render() {
     const { classes, form } = this.props;
     const { fields, action, secondaryActions } = form;
+    const { values, errors, isLoading, isError, nonFieldError } = this.state;
 
     return (
       <Grid container direction="column" className={classes.formContainer}>
         <Grid item xs onKeyDown={this.handleKeyDown(action.url)}>
           <Form
             fields={fields}
-            values={this.state.values}
+            values={values}
             handleValueChange={this.handleValueChange}
-            errors={this.state.errors}
-            isLoading={this.state.isLoading}
+            errors={errors}
+            isLoading={isLoading}
           />
-          {this.state.errors['non_field_errors'] && (
-            <p className={classes.errorMessage}>
-              {this.state.errors['non_field_errors']}
-            </p>
+          {nonFieldError && (
+            <p className={classes.errorMessage}>{nonFieldError}</p>
           )}
           <Button
             fullWidth
@@ -127,12 +142,16 @@ class FormContainer extends React.Component {
             id={action.name}
             onClick={this.handleSubmit(action.url)}
             className={classes.mainButton}
-            disabled={this.state.isLoading || this.state.isError}
+            disabled={isLoading || isError}
           >
-            <FormattedMessage
-              id={action.labelId}
-              defaultMessage={action.label}
-            />
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <FormattedMessage
+                id={action.labelId}
+                defaultMessage={action.label}
+              />
+            )}
           </Button>
         </Grid>
         <Grid item>
