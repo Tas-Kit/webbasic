@@ -29,8 +29,7 @@ class FormContainer extends React.Component {
       values: {},
       isLoading: false,
       isError: !validation.passes(),
-      errors: {},
-      nonFieldError: ''
+      errors: {}
     };
   }
 
@@ -45,15 +44,13 @@ class FormContainer extends React.Component {
       this.setState({
         values: newValues,
         isError: false,
-        errors: {},
-        nonFieldError: ''
+        errors: {}
       });
     } else {
       this.setState({
         values: newValues,
         isError: true,
-        errors: validation.errors.all(),
-        nonFieldError: ''
+        errors: validation.errors.all()
       });
     }
   };
@@ -81,9 +78,6 @@ class FormContainer extends React.Component {
           }
           this.setState({
             errors: err,
-            nonFieldError: err['non_field_errors']
-              ? err['non_field_errors']
-              : err.message,
             isError: true
           });
         })
@@ -115,7 +109,7 @@ class FormContainer extends React.Component {
   render() {
     const { classes, form } = this.props;
     const { fields, action, secondaryActions } = form;
-    const { values, errors, isLoading, isError, nonFieldError } = this.state;
+    const { values, errors, isLoading, isError } = this.state;
 
     return (
       <Grid container direction="column" className={classes.formContainer}>
@@ -127,8 +121,8 @@ class FormContainer extends React.Component {
             errors={errors}
             isLoading={isLoading}
           />
-          {nonFieldError && (
-            <p className={classes.errorMessage}>{nonFieldError}</p>
+          {errors['non_field_errors'] && (
+            <p className={classes.errorMessage}>{errors['non_field_errors']}</p>
           )}
           <LoadingButton
             fullWidth
