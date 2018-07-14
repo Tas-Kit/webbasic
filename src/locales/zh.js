@@ -8,7 +8,8 @@ const zh = {
   resetPasswordButton: '重设密码',
   code: '验证码',
   getCodeButton: '获取验证码',
-  usernameOrEmail: '用户名/邮箱'
+  usernameOrEmail: '用户名/邮箱',
+  networkErrorMessage: '网络问题'
 };
 
 export default zh;
