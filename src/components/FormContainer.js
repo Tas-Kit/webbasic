@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, Grid, Button, colors } from '@material-ui/core';
+import { withStyles, Grid, colors } from '@material-ui/core';
 import Validator from 'validatorjs';
 import { FormattedMessage } from 'react-intl';
 import SecondaryActionButtons from './SecondaryActionButtons';
@@ -98,13 +98,6 @@ class FormContainer extends React.Component {
       this.sendAction(url);
     }
   };
-
-  componentDidMount() {
-    if (navigator) {
-      const locale = navigator.language.split(/[-_]/)[0];
-      Validator.useLang(locale);
-    }
-  }
 
   render() {
     const { classes, form } = this.props;

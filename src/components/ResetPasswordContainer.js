@@ -6,6 +6,7 @@ import { post } from '../api';
 import { FormattedMessage } from 'react-intl';
 import { resetPasswordForm } from '../../config/forms';
 import LoadingButton from './LoadingButton';
+import FormattedTextField from './FormattedTextField';
 
 const styles = {
   formContainer: {
@@ -134,13 +135,6 @@ class ResetPasswordContainer extends React.Component {
     if (this.timer) clearInterval(this.timer);
   }
 
-  componentDidMount() {
-    if (navigator) {
-      const locale = navigator.language.split(/[-_]/)[0];
-      Validator.useLang(locale);
-    }
-  }
-
   render() {
     const { classes } = this.props;
     const { fields, action, secondaryActions } = this.form;
@@ -167,12 +161,9 @@ class ResetPasswordContainer extends React.Component {
                   spacing={8}
                 >
                   <Grid item xs={field.name === 'code' ? 7 : true}>
-                    <TextField
+                    <FormattedTextField
                       id={field.name}
-                      label={
-                        <FormattedMessage id={field.labelId} />
-                        // defaultMessage={field.label}
-                      }
+                      labelId={field.labelId}
                       type={field.type}
                       required={field.required}
                       helperText={errors[field.name]}

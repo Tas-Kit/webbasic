@@ -12,9 +12,6 @@ function withRoot(Component) {
       super(props);
 
       this.pageContext = this.props.pageContext || getPageContext();
-      this.state = {
-        locale: 'en'
-      };
     }
 
     componentDidMount() {
@@ -23,11 +20,6 @@ function withRoot(Component) {
       if (jssStyles && jssStyles.parentNode) {
         jssStyles.parentNode.removeChild(jssStyles);
       }
-      if (navigator) {
-        this.setState({
-          locale: navigator.language.split(/[-_]/)[0]
-        });
-      }
     }
 
     pageContext = null;
@@ -35,7 +27,7 @@ function withRoot(Component) {
     render() {
       // MuiThemeProvider makes the theme available down the React tree thanks to React context.
       return (
-        <AutoIntlProvider locale={this.state.locale}>
+        <AutoIntlProvider>
           <MuiThemeProvider
             theme={this.pageContext.theme}
             sheetsManager={this.pageContext.sheetsManager}
