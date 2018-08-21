@@ -16,7 +16,7 @@ const defaultOnError = res => {
   throw new Error();
 };
 
-const handleTimeOut = () => {
+const handleUnauthorized = () => {
   if (window) {
     window.location.replace('/login');
   }
@@ -25,29 +25,36 @@ const handleTimeOut = () => {
 const transformResponse = res => {
   if (res.ok) {
     return res.json();
-  }
-  switch (res.status) {
-    case 401:
-      handleTimeOut();
-      break;
-    default:
-      return res.json().then(errors => Promise.reject(errors));
+  } else {
+    switch (res.status) {
+      case 401:
+        handleUnauthorized();
+        break;
+      default:
+        return res.json().then(errors => Promise.reject(errors));
+    }
   }
   return null;
 };
 
 export const post = async (url, payload) => {
   // use async so thrwoed errors in transformResponse can be caught
-  const json = await fetch(`${baseUrl}${url}`, {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    credentials: 'same-origin',
-    body: JSON.stringify(payload)
-  }).then(res => transformResponse(res));
-  return json;
+  try {
+    const res = await fetch(`${baseUrl}${url}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify(payload)
+    });
+    return transformResponse(res);
+  } catch (e) {
+    return Promise.reject({
+      non_field_errors: e.message
+    });
+  }
 };
 
 export default {

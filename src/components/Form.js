@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles, TextField } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import FormattedTextField from './FormattedTextField';
 
 const styles = {
   textField: {}
@@ -14,15 +14,10 @@ const Form = props => {
         <p>Empty form</p>
       ) : (
         fields.map(field => (
-          <TextField
+          <FormattedTextField
             id={field.name}
             key={field.name}
-            label={
-              <FormattedMessage
-                id={field.labelId}
-                defaultMessage={field.label}
-              />
-            }
+            labelId={field.labelId}
             type={field.type}
             required={field.required}
             helperText={errors[field.name]}

@@ -8,7 +8,8 @@ const en = {
   resetPasswordButton: 'Reset Password',
   code: 'Verification Code',
   getCodeButton: 'Get Code',
-  usernameOrEmail: 'Username/Email'
+  usernameOrEmail: 'Username/Email',
+  networkErrorMessage: 'Network Error'
 };
 
 export default en;
