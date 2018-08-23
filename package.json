@@ -20,5 +20,8 @@
     "start": "NODE_ENV=production node server.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.8.0"
   }
 }

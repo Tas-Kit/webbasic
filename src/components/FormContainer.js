@@ -6,12 +6,13 @@ import {
   colors,
   CircularProgress
 } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
 import Validator from 'validatorjs';
+import { FormattedMessage } from 'react-intl';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import Form from './Form';
 import { post } from '../api';
 import { redirect, getRedirectUrl } from '../util';
+import LoadingButton from './LoadingButton';
 
 const styles = {
   formContainer: {
@@ -35,8 +36,7 @@ class FormContainer extends React.Component {
       values: {},
       isLoading: false,
       isError: !validation.passes(),
-      errors: {},
-      nonFieldError: ''
+      errors: {}
     };
   }
 
@@ -51,15 +51,13 @@ class FormContainer extends React.Component {
       this.setState({
         values: newValues,
         isError: false,
-        errors: {},
-        nonFieldError: ''
+        errors: {}
       });
     } else {
       this.setState({
         values: newValues,
         isError: true,
-        errors: validation.errors.all(),
-        nonFieldError: ''
+        errors: validation.errors.all()
       });
     }
   };
@@ -85,9 +83,6 @@ class FormContainer extends React.Component {
           }
           this.setState({
             errors: err,
-            nonFieldError: err['non_field_errors']
-              ? err['non_field_errors']
-              : err.message,
             isError: true
           });
         })
@@ -109,17 +104,10 @@ class FormContainer extends React.Component {
     }
   };
 
-  componentDidMount() {
-    if (navigator) {
-      const locale = navigator.language.split(/[-_]/)[0];
-      Validator.useLang(locale);
-    }
-  }
-
   render() {
     const { classes, form } = this.props;
     const { fields, action, secondaryActions } = form;
-    const { values, errors, isLoading, isError, nonFieldError } = this.state;
+    const { values, errors, isLoading, isError } = this.state;
 
     return (
       <Grid container direction="column" className={classes.formContainer}>
@@ -131,10 +119,10 @@ class FormContainer extends React.Component {
             errors={errors}
             isLoading={isLoading}
           />
-          {nonFieldError && (
-            <p className={classes.errorMessage}>{nonFieldError}</p>
+          {errors['non_field_errors'] && (
+            <p className={classes.errorMessage}>{errors['non_field_errors']}</p>
           )}
-          <Button
+          <LoadingButton
             fullWidth
             color="primary"
             variant={'raised'}
@@ -142,16 +130,14 @@ class FormContainer extends React.Component {
             onClick={this.handleSubmit(action.url)}
             className={classes.mainButton}
             disabled={isLoading || isError}
+            isLoading={isLoading}
+            progressProps={{ size: 25 }}
           >
-            {isLoading ? (
-              <CircularProgress />
-            ) : (
-              <FormattedMessage
-                id={action.labelId}
-                defaultMessage={action.label}
-              />
-            )}
-          </Button>
+            <FormattedMessage
+              id={action.labelId}
+              defaultMessage={action.label}
+            />
+          </LoadingButton>
         </Grid>
         <Grid item>
           {secondaryActions && (

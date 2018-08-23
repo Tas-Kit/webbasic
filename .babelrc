@@ -1,0 +1,13 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "material-ui",
+        "libraryDirectory": "components",
+        "camel2DashComponentName": false
+      }
+    ]
+  ]
+}
