@@ -1,10 +1,17 @@
 import React from 'react';
-import { withStyles, Grid, colors } from '@material-ui/core';
+import {
+  withStyles,
+  Grid,
+  Button,
+  colors,
+  CircularProgress
+} from '@material-ui/core';
 import Validator from 'validatorjs';
 import { FormattedMessage } from 'react-intl';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import Form from './Form';
 import { post } from '../api';
+import { redirect, getRedirectUrl } from '../util';
 import LoadingButton from './LoadingButton';
 
 const styles = {
@@ -67,9 +74,7 @@ class FormContainer extends React.Component {
             onSubmitSucceed(result, this.state.values);
           } else {
             // If user does not handle success, form will simply redirect
-            const destination =
-              window.location.origin + this.props.form.action.redirectUrl;
-            window.location = destination;
+            redirect(getRedirectUrl(this.props.form.action.redirectUrl));
           }
         })
         .catch(err => {
