@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles, Grid, Button, colors, TextField } from '@material-ui/core';
 import Validator from 'validatorjs';
+import { debounce } from 'lodash';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import { post } from '../api';
 import { FormattedMessage } from 'react-intl';
@@ -61,7 +62,7 @@ class ResetPasswordContainer extends React.Component {
     }
   };
 
-  sendAction = url => {
+  sendAction = debounce(url => {
     if (!this.state.isError) {
       this.setState({
         isResetLoading: true
@@ -84,7 +85,7 @@ class ResetPasswordContainer extends React.Component {
           })
         );
     }
-  };
+  }, 1000);
 
   handleSubmit = url => () => {
     this.sendAction(url);
@@ -167,7 +168,6 @@ class ResetPasswordContainer extends React.Component {
                       type={field.type}
                       required={field.required}
                       helperText={errors[field.name]}
-                      disabled={isLoading}
                       error={!!errors[field.name]}
                       fullWidth
                       onChange={this.handleValueChange(field.name)}
@@ -185,12 +185,6 @@ class ResetPasswordContainer extends React.Component {
                         id={action.name}
                         onClick={this.handleGetCodeClick}
                         className={classes.mainButton}
-                        disabled={
-                          isLoading ||
-                          !values['email'] ||
-                          !!errors['email'] ||
-                          timerCount !== 60
-                        }
                       >
                         {timerCount === 60 ? (
                           <FormattedMessage id={'getCodeButton'} />
@@ -213,7 +207,6 @@ class ResetPasswordContainer extends React.Component {
             color="primary"
             variant={'raised'}
             className={classes.mainButton}
-            disabled={isLoading || isResetLoading || isError}
             onClick={this.handleSubmit(action.url)}
             isLoading={isResetLoading}
             progressProps={{ size: 25 }}

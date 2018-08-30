@@ -7,6 +7,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import Validator from 'validatorjs';
+import { debounce } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import SecondaryActionButtons from './SecondaryActionButtons';
 import Form from './Form';
@@ -62,7 +63,7 @@ class FormContainer extends React.Component {
     }
   };
 
-  sendAction = url => {
+  sendAction = debounce(url => {
     const { onSubmitSucceed, onSubmitFail } = this.props;
     if (this.state.values['username'] && !this.state.isError) {
       this.setState({
@@ -92,7 +93,7 @@ class FormContainer extends React.Component {
           })
         );
     }
-  };
+  }, 1000);
 
   handleSubmit = url => () => {
     this.sendAction(url);
@@ -129,7 +130,6 @@ class FormContainer extends React.Component {
             id={action.name}
             onClick={this.handleSubmit(action.url)}
             className={classes.mainButton}
-            disabled={isLoading || isError}
             isLoading={isLoading}
             progressProps={{ size: 25 }}
           >
